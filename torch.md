@@ -2,7 +2,7 @@
 
 ## Basics
 
-`import torch` is assumed
+`import torch; import numpy as np` is assumed
 
 _Notation_: `t` denotes a tensorflow tensor, `a` a numpy array, `df` a data frame, `17` an arbitrary scalar 
 
@@ -12,7 +12,7 @@ _Notation_: `t` denotes a tensorflow tensor, `a` a numpy array, `df` a data fram
 |--------------|-------------------|-------------|
 | `torch.tensor( obj )` |  | create a tensor from a Python object that is a list of  | 
 | `t.numpy()`  |                   | convert to numpy array |
-| `torch.from_numpy(a)` <br />  `torch.from_numpy( df.values )` |          | numpy array converted to tensor | 
+| `torch.from_numpy(a)` <br /> `torch.from_numpy( df.values )` |          | numpy array converted to tensor | 
 
 
 ### Basic tensor characteristics

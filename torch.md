@@ -48,7 +48,7 @@ _Notation_: `t` denotes a tensorflow tensor, `a` a numpy array, `df` a data fram
 
 ## Datasets 
 
-Datasets are objects of classes inheriting from `torch.util.Dataset`. They should implement `__getitem__` and `__len__` functions.
+Datasets are objects of classes inheriting from `torch.util.data.Dataset`. They should implement `__getitem__` and `__len__` functions.
 
 
 

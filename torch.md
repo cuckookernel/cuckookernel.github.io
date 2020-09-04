@@ -10,9 +10,11 @@ _Notation_: `t` denotes a tensorflow tensor, `a` a numpy array, `df` a data fram
 
 | torch        |  numpy equivalent | description |
 |--------------|-------------------|-------------|
-| `torch.tensor( obj )` |  | create a tensor from a Python object that is a list of  | 
+| `torch.tensor( obj )` |  | create a tensor from a Python object that is a list of lists (or a single Python number)  |
+| `torch.tensor( obj, requires_grad=True )` |  | when we want to compute derivatives of some scalar function with respect to this tensor |
 | `t.numpy()`  |                   | convert to numpy array |
 | `torch.from_numpy(a)` <br /> `torch.from_numpy( df.values )` |          | numpy array converted to tensor | 
+| `t.detach().numpy()` |  |  necessary when tensor is included on a computation graph, i.e `t.requires_grad == True` | 
 
 
 ### Basic tensor characteristics
@@ -32,8 +34,22 @@ _Notation_: `t` denotes a tensorflow tensor, `a` a numpy array, `df` a data fram
 | `t[i][j]` | `a[i][j]` | index into first, then second dimension; evals. to tensor that is 2 less in rank | 
 | `t[i, j]` | `a[i, j]` | indexing directly first and second dimensions; same as `a[i][j]` but presumably faster as it is a single python function call (?) |
 | `t[i1:i2, j1:j2 ] ` | `a[i1:i2, j1:j2]` | slicing directly into first and second dimensions | 
+
+### Operations on tensors
+
+| torch        |  numpy equivalent | description |
+|--------------|-------------------|-------------|
+| `torch.sum(t)` | `np.sum(a)` |  sum of all elements in tensor | 
 | `t1 + t2` | `a1 + a2` | component wise sum of tensors |
 | `t1 * t2` | `a1 * a2` | component wise product of tensors, also known as Hadamard product, NOT to be confused with dot product or matrix multiplication! |
 | `17 * t`, `t * 17` | `17 * a`, `a * 17` | multiplication (of each element) by a scalar | 
 | `torch.mm( t1, t2 )` | `np.matmul( a1, a2)` | matrix multiplication | 
+| `torch.relu(t)` | `a * (a >= 0)`  | component wise result of `max(x , 0)`  |
+
+## Datasets 
+
+Datasets are objects of classes inheriting from `torch.util.Dataset`. They should implement `__getitem__` and `__len__` functions.
+
+
+
 

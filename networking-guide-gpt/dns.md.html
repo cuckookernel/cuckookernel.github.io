@@ -1,0 +1,33 @@
+(##) Can you tell me more about DNS?
+
+
+* DNS translates domain names into IP addresses: DNS (Domain Name System) is a hierarchical, decentralized naming system for computers, services, or other resources connected to the internet or a private network. DNS translates domain names, such as www.example.com, into IP addresses, such as 192.0.2.1. This allows users to connect to websites and other resources using human-readable domain names, rather than having to remember the numerical IP addresses.
+
+* DNS uses a _hierarchical structure_: DNS uses a hierarchical structure, with each domain name being broken down into subdomains. The highest level of the hierarchy is the root domain, which contains information about the top-level domains (**TLDs**), such as .com, .org, and .net. Each TLD is then divided into second-level domains, such as example.com, example.org, etc., and so on.
+
+* **DNS caching**: DNS caching is a process that stores DNS information locally on a device or server, to speed up subsequent requests for the same information. When a device requests the IP address for a domain name, the request is sent to a DNS resolver, which looks up the IP address in a DNS server. If the DNS resolver has already cached the IP address for that domain name, it can return the result immediately, without having to perform a new DNS lookup.
+
+* **DNS records**: DNS records are used to store information about domain names and their associated IP addresses. There are many different types of DNS records, each with a specific purpose. Some common types of DNS records include:
+
+  * *A record:* Maps a domain name to an IPv4 address
+  * *AAAA record:* Maps a domain name to an IPv6 address
+  * *CNAME record:* Maps a domain name to another domain name (alias)
+  * *MX record:* Identifies the mail server responsible for accepting email for a domain
+  * *NS record:* Identifies the authoritative name servers for a domain
+  * *TXT record:* Stores arbitrary text information associated with a domain
+
+* **DNS security:** DNS is a critical component of the internet infrastructure, and as such, it is also a common target for cyberattacks. DNS security mechanisms, such as DNSSEC (Domain Name System Security Extensions), are used to help protect against DNS spoofing, cache poisoning, and other types of attacks. DNSSEC adds digital signatures to DNS records, which can be used to verify the authenticity of the DNS responses.
+
+
+(###) What is the `nslookup` command used for ?
+
+The nslookup command is used to query the Domain Name System (DNS) to obtain information about domain names, such as IP addresses and mail server information. It can be used to troubleshoot DNS-related problems, verify DNS records, and help diagnose network issues.
+
+
+
+<link rel="stylesheet" href="custom.css">
+<!-- Markdeep: -->
+<style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style>
+<script src="markdeep.min.js" charset="utf-8"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>
+<script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>

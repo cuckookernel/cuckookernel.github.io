@@ -1,0 +1,65 @@
+
+(##) What does the command `route -n` show?
+
+The `route -n` command is a Linux command that displays the kernel's IP routing table in a concise format. The output of the command shows the _destination network_, the _gateway_ (or next hop) to reach that network, the netmask, the metric (or cost) associated with the route, and the interface through which the traffic will be sent. The "-n" option instructs the command to display the output in numeric format, rather than attempting to resolve hostnames and network names to their symbolic names, which can be useful for faster processing and avoiding potential delays due to DNS resolution issues.
+
+(####) An example of what the output of the `route -n` command would look like
+
+```
+Kernel IP routing table
+Destination     Gateway         Genmask         Flags Metric Ref    Use Iface
+0.0.0.0         192.168.0.1     0.0.0.0         UG    0      0        0 eth0
+10.0.0.0        192.168.0.254   255.0.0.0       UG    0      0        0 eth0
+192.168.0.0     0.0.0.0         255.255.255.0   U     0      0        0 eth0
+
+```
+
+In this example, the output shows the routing table of the device, which contains information about how to reach different network destinations. The table has the following columns:
+
+* **Destination:** The network destination that this route applies to.
+
+* **Gateway:** The IP address of the gateway (router) that is used to reach the destination.
+
+* **Genmask:** The netmask that defines the range of IP addresses for the destination network.
+
+* **Flags:** A set of flags that determine how the route is used. UG indicates that the route is to a network gateway.
+Metric: A value that is used to determine the priority of the route.
+
+* **Ref:** A count of the number of references to this route.
+
+* **Use:** A count of the number of packets that have been sent through this route.
+
+* **Iface**: The name of the network interface that this route applies to.
+
+
+(###) What are some possible values of the 'flags' column of the `route -n`  and their meanings?
+
+Here are some of the possible values of the Flags column in the output of the route -n command and their meanings:
+
+* U (Up): Indicates that the route is active and available for use.
+* G (Gateway): Indicates that the route is a gateway route, and the Gateway column specifies the IP address of the gateway for this route.
+* H (Host): Indicates that the destination is a specific host, rather than a network or subnet. The Gateway column should be the IP address of the host itself.
+* D (Dynamic): Indicates that the route was dynamically created by a routing protocol, such as OSPF or BGP.
+* M (Modified): Indicates that the route has been modified and may not be up-to-date.
+* R (Reinstate): Indicates that a route that was removed from the routing table has been reinstated.
+* ! (Reject): Indicates that the route is unreachable, and packets sent to this destination will be rejected.
+* C (Cache): Indicates that the route is cached, rather than being a direct result of the routing table. This can happen when a previous lookup was performed or when the routing table was modified.
+* E (Expire): Indicates that the route is no longer valid and is in the process of being removed from the routing table.
+* L (Link): Indicates that the route is a local route, meaning that the destination is on the same subnet as the device itself.
+* S (Static): Indicates that the route is a manually configured static route, rather than being learned dynamically from a routing protocol.
+
+
+(###) What does it mean when an interface name in the output of route -n command starts with the letters wlp?
+
+When an interface name in the output of the route -n command starts with the letters "wlp", it typically indicates that the interface is a wireless network interface on a Linux system.
+
+The "w" in "wlp" stands for "wireless", and the "lp" stands for "local port". The number that follows "wlp" (e.g., wlp0s20f3) is a unique identifier that is assigned to the interface by the operating system.
+
+On some Linux systems, wireless network interfaces are named with the "wlan" prefix instead of "wlp". This can vary depending on the distribution of Linux being used, and the specific version of the operating system.
+
+<link rel="stylesheet" href="custom.css">
+<!-- Markdeep: -->
+<style class="fallback">body{visibility:hidden;white-space:pre;font-family:monospace}</style>
+<script src="markdeep.min.js" charset="utf-8"></script>
+<script src="https://casual-effects.com/markdeep/latest/markdeep.min.js?" charset="utf-8"></script>
+<script>window.alreadyProcessedMarkdeep||(document.body.style.visibility="visible")</script>

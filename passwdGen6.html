@@ -1,11 +1,13 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
-<!-- saved from url=(0037)http://www.angel.net/~nic/passwd.html -->
-<html lang=en xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
-	<head>
-        <title>Password generator</title>
-        <meta http-equiv=Content-Type content="text/html; charset=windows-1252">
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Strict//EN" "http://www.w3.org/TR/html4/strict.dtd">
 
-	<style>
+<html lang="en">
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>Cuckookernel's Password generator</title>
+
+<style type="text/css">
 	body {
 	    background-color: #330000;
         color: #ffdd66;
@@ -39,7 +41,6 @@
 
     #main tr {
         padding: 100pt;
-
     }
 
 	td {
@@ -83,66 +84,9 @@
         background-color: #555;
         color: aliceblue;
     }
+</style>
 
-	</style>
-
-
-<!-- <meta content="MSHTML 6.00.2900.2722" name=GENERATOR></HEAD> -->
-
-<body onload="bodyOnLoad()">
-
-<!-- <form name="f"
-      onsubmit="password.value = generate(); document.f.password.focus(); document.f.password.select(); return false;"
-      method="post" />
-    onsubmit="password.value = search(master.value + ':' + site.value).substr(0,8);document.f.password.focus();        document.f.password.select(); return false; " -->
-
-
-<table id="main">
-  <tbody>
-  	<tr> <td><b>Master pwd:</b></td>
-    	 <td class = "np">
-    		<input type=password name="master" id="master" />
-      		<script language=JavaScript>document.f.master.focus()</script> </td> </tr>
-
-   <tr> <td >Site token:</td>
-       	<td class = "np" ><input name="site" id="site"
-            onchange="run_generate()"/>
-        </td>
-    </tr>
-
-   <tr> <td >Start salt:</td>
-       	<td class = "np" ><input name="salt" id="salt" value="0" size="3"
-            onchange="run_generate()"/>
-        </td>
-    </tr>
-
-   <tr> <td>Params</td>
-        <td class = "nb np">
-            <table  id="params-table">
-                <tr> <td> length: </td> <td><input name="req_length"  id="req_length"  value="12" size="1"/> </td>
-                  <td> digits: </td> <td><input name="req_digits"  id="req_digits"  value="2"  size="1"/> </td> </tr>
-                <tr> <td>upper:   </td> <td><input name="req_upper"   id="req_upper"   value="3"  size="1"/> </td>
-                     <td>special: </td> <td><input name="req_special" id="req_special" value="2"  size="1"/> </td> </tr>
-            </table>
-        </td>
-    </tr>
-
-   <tr>
-        <td colSpan=2 class = "nb">
-            <input type="submit" value="Generate" id="generate-button"
-                onclick="run_generate()">
-        </td>
-    </tr>
-
-   <tr> <td ><b>Gen pwd: </b></td>
-        <td class = "nb np"><input class="generated" name="password" id="password" /> </td> </tr>
-
-
-</tbody>
-</table>
-</body>
-
-<script language=JavaScript>
+<script type="text/javascript">
 
     function bodyOnLoad() {
         console.log("Body On Load");
@@ -156,6 +100,7 @@
         el("req_digits").value = urlParam.get("digits") || "2";
         el("req_upper").value = urlParam.get("upper") || "3";
         el("req_special").value = urlParam.get("special") || "2";
+        el("master").focus();
     }
 
     function el(id) {
@@ -391,8 +336,8 @@
     var site;
     function myOnsubmit() {
           password.value = mateos_md5(master.value + ':' + site.value).substr(0,8);
-          document.f.password.focus();
-          document.f.password.select();
+          el("password").focus();
+          el("password").select();
           return false;
     }
 
@@ -428,9 +373,9 @@
         let passwd = md5_special(master + ':' + site + ":" + salt).substr(0, req_length);
         // console.log( "master, site,salt =", master, ",", site, ",", salt );
 
-        const digits_range  = int_range_from( "req_digits" );
-        const upper_range   = int_range_from( "req_upper" );
-        const special_range = int_range_from( "req_special" );
+        const digits_range  = int_range_from("req_digits");
+        const upper_range   = int_range_from("req_upper");
+        const special_range = int_range_from("req_special");
 
         console.log("digits_range", digits_range, "upper_range", upper_range,
                     "special_range", special_range)
@@ -441,19 +386,21 @@
         while( !check_generated_v6(passwd, digits_range, upper_range, special_range)
                 && (cnt < 10000) ) {
             salt += 1;
-            passwd = md5_special( master + ':' + site + ":" + salt ).substr(0, req_length);
+            passwd = md5_special(master + ':' + site + ":" + salt).substr(0, req_length);
             // console.log( "inside loop: salt: ",salt, typeof(salt), passwd );
             cnt += 1;
         }
 
         salt_fld.value = salt;
         // console.log( "salt, passwd:",  salt, ",", passwd );
-        window.setTimeout( clearSome, 60000 );
+        if (TIMEOUT_ID !== null) {
+            clearTimeout(TIMEOUT_ID)
+        }
 
+        TIMEOUT_ID = window.setTimeout(clearSome, 60000);
         function v(id) {
             return document.getElementById(id).value
         }
-
         setAddressBar(`passwdGen6.html?site_token=${v("site")}&salt=${salt}&length=${v("req_length")}&digits=${v("req_digits")}&upper=${v("req_upper")}&special=${v("req_special")}`)
 
         return passwd;
@@ -504,8 +451,57 @@
         }
     }
 
-    console.log("End of Script")
+    var TIMEOUT_ID = null;
 
 </script>
+
+</head>
+
+<body onload="bodyOnLoad()">
+
+<table id="main">
+  <tbody>
+  	<tr> <td><b>Master pwd:</b></td>
+    	<td class = "np">
+    		<input type=password name="master" id="master">
+        </td>
+
+   <tr> <td >Site token:</td>
+       	<td class = "np" ><input name="site" id="site"
+            onchange="run_generate()">
+        </td>
+    </tr>
+
+   <tr> <td >Start salt:</td>
+       	<td class = "np" ><input name="salt" id="salt" value="0" size="3"
+            onchange="run_generate()">
+        </td>
+    </tr>
+
+   <tr> <td>Params</td>
+        <td class = "nb np">
+            <table  id="params-table">
+                <tr> <td> length: </td> <td><input name="req_length"  id="req_length"  value="12" size="1"> </td> </tr>
+                <tr> <td> digits: </td> <td><input name="req_digits"  id="req_digits"  value="2"  size="1"> </td> </tr>
+                <tr> <td>upper:   </td> <td><input name="req_upper"   id="req_upper"   value="3"  size="1"> </td> </tr>
+                <tr> <td>special: </td> <td><input name="req_special" id="req_special" value="2"  size="1"> </td> </tr>
+            </table>
+        </td>
+    </tr>
+
+   <tr>
+        <td colSpan=2 class = "nb">
+            <input type="submit" value="Generate" id="generate-button"
+                onclick="run_generate()">
+        </td>
+    </tr>
+
+   <tr> <td ><b>Gen pwd: </b></td>
+        <td class = "nb np"><input class="generated" name="password" id="password"> </td> </tr>
+
+
+</tbody>
+</table>
+</body>
 
 </html>

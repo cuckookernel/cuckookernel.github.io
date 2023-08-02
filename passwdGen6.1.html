@@ -96,6 +96,7 @@
         console.log("param: length", );
 
         el("salt").value = urlParam.get("salt") || "0";
+        el("site").value = urlParam.get("site") || "";
         el("req_length").value = urlParam.get("length") || "12";
         el("req_digits").value = urlParam.get("digits") || "2";
         el("req_upper").value = urlParam.get("upper") || "3";
@@ -401,7 +402,7 @@
         function v(id) {
             return document.getElementById(id).value
         }
-        setAddressBar(`passwdGen6.1.html?site_token=${v("site")}&salt=${salt}&length=${v("req_length")}&digits=${v("req_digits")}&upper=${v("req_upper")}&special=${v("req_special")}`)
+        setAddressBar(`passwdGen6.1.html?site=${v("site")}&salt=${salt}&length=${v("req_length")}&digits=${v("req_digits")}&upper=${v("req_upper")}&special=${v("req_special")}`)
 
         return passwd;
     }
@@ -466,7 +467,7 @@
     		<input type=password name="master" id="master">
         </td>
 
-   <tr> <td >Site token:</td>
+   <tr> <td >Site:</td>
        	<td class = "np" ><input name="site" id="site"
             onchange="run_generate()">
         </td>
